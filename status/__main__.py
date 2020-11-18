@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
+import requests
 
 app = Flask(__name__)
 
@@ -20,29 +21,48 @@ BASE_RES = {
     "issue_report_channels": ["email"],
     "state": {
         "icon": {
-            "open": "http://shackspace.de/sopen.gif",
-            "closed": "http://shackspace.de/sopen.gif",
+            # TODO: proper logos
+            "open": "https://hsp.sh/assets/hsp-gray.png",
+            "closed": "https://hsp.sh/assets/hsp-gray.png",
         },
-        "open": false,
+        "open": False,
     },
     "projects": [
-        "http://github.com/shackspace",
-        "http://shackspace.de/wiki/doku.php?id=projekte",
+        "https://github.com/hspsh",
+        "https://wiki.hsp.sh",
     ],
 }
+
+WHOHACKS_ENDPOINT = "https://whois.at.hsp.sh/api/now"
+
+
+def get_whohacks():
+    res = requests.get(WHOHACKS_ENDPOINT)
+    return res.json()
 
 
 @app.route("/api/now")
 def spaceapi():
     global BASE_RES
-    result = {**BASE_RES}
-    result["status"]["open"] = false
-    return jsonify(result)
+    res = {**BASE_RES}
+
+    try:
+        wh = get_whohacks()
+        res["status"]["open"] = True if wh["headcount"] > 0 else False
+    except Exception:
+        pass  # TODO: Logging
+
+    return jsonify(res)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        wh = get_whohacks()
+    except Exception:
+        pass  # TODO: Logging
+
+    return render_template("index.html", **wh)
 
 
 if __name__ == "__main__":
