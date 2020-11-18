@@ -336,7 +336,7 @@ watchdog = ["watchdog"]
 
 [metadata]
 content-hash = "3974e7adcaba530d51abec00df90332bc2d23aa32acf94c0e05e8dda702eeb03"
-python-versions = "^3.8"
+python-versions = "3.8.1"
 
 [metadata.files]
 appdirs = [
