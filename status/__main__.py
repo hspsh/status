@@ -62,7 +62,7 @@ def index():
     except Exception:
         pass  # TODO: Logging
 
-    return render_template("index.html", **wh)
+    return render_template("index.html", **BASE_RES, **wh)
 
 
 if __name__ == "__main__":
