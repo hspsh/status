@@ -6,7 +6,7 @@ app = Flask(__name__)
 BASE_RES = {
     "api": "0.13",
     "space": "Hackerspace Pomorze",
-    "logo": "https://hsp.sh/assets/hsp-gray.png",
+    "logo": "https://hsp.sh/assets/logo_accent.png",
     "url": "https://hsp.sh",
     "location": {
         "address": "Do Studzienki 28, Gdańsk, Poland",
@@ -22,8 +22,8 @@ BASE_RES = {
     "state": {
         "icon": {
             # TODO: proper logos
-            "open": "https://hsp.sh/assets/hsp-gray.png",
-            "closed": "https://hsp.sh/assets/hsp-gray.png",
+            "open": "https://hsp.sh/assets/logo_accent.png",
+            "closed": "https://hsp.sh/assets/logo.png",
         },
         "open": False,
     },
