@@ -1,7 +1,10 @@
 from flask import Flask, render_template, jsonify
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 BASE_RES = {
     "api": "0.13",
