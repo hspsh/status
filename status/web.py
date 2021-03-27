@@ -51,7 +51,7 @@ def spaceapi():
 
     try:
         wh = get_whohacks()
-        res["status"]["open"] = True if wh["headcount"] > 0 else False
+        res["state"]["open"] = True if wh["headcount"] > 0 else False
     except Exception:
         pass  # TODO: Logging
 
