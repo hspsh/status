@@ -1,0 +1,1 @@
+# SpaceApi for hsp.sh
