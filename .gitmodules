@@ -1,3 +1,0 @@
-[submodule "tests/schema"]
-	path = tests/schema
-	url = git@github.com:SpaceApi/schema.git
