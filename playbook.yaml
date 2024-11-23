@@ -1,0 +1,61 @@
+---
+- name: Deploy Monitoror and Configuration Files
+  hosts: mikrus
+  become: true
+  vars:
+    monitoror_service_path: /etc/systemd/system/monitoror.service
+    monitoror_exec_path: /usr/local/bin/monitoror
+    monitoror_config_path: /etc/monitoror/config.json
+    caddy_config_path: /etc/caddy/Caddyfile
+
+  tasks:
+    - name: Ensure required directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /etc/monitoror
+        - /etc/caddy
+
+    - name: Check if Monitoror executable exists
+      stat:
+        path: /usr/local/bin/monitoror
+      register: monitoror_executable
+
+    - name: Fail if Monitoror executable is missing
+      fail:
+        msg: "The Monitoror executable does not exist at /usr/local/bin/monitoror. Please upload it."
+      when: not monitoror_executable.stat.exists
+
+    - name: Upload Monitoror config
+      copy:
+        src: ./monitoror.json
+        dest: "{{ monitoror_config_path }}"
+        mode: '0644'
+
+    - name: Upload Monitoror systemd service
+      copy:
+        src: ./monitoror.service
+        dest: "{{ monitoror_service_path }}"
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: Enable and start Monitoror service
+      systemd:
+        name: monitoror
+        enabled: true
+        state: started
+
+    - name: Upload Caddyfile
+      copy:
+        src: ./Caddyfile
+        dest: "{{ caddy_config_path }}"
+        mode: '0644'
+
+    - name: Restart Caddy service
+      systemd:
+        name: caddy
+        state: restarted

@@ -1,0 +1,6 @@
+:20107 {
+        handle /api/now* {
+                reverse_proxy https://whois.at.hsp.sh
+        }
+        reverse_proxy localhost:8000
+}

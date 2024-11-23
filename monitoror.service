@@ -1,0 +1,18 @@
+[Unit]
+Description=Monitoror Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/monitoror
+Restart=always
+User=root
+Group=root
+WorkingDirectory=/usr/local/bin
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="MO_PORT=8000"
+Environment="MO_CONFIG=/etc/monitoror/config.json"
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
