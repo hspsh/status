@@ -9,3 +9,9 @@ It is hosted on an external host provided by mikr.us.
 * Push data to it from internal network.
 
 This should enable secure service that doesn't expose internal network while informing what works in the DMZ.
+
+## Deploy
+
+```
+ansible-playbook playbook.yaml -i inventory.ini
+```
